@@ -1,17 +1,30 @@
-import {Card} from 'react-bootstrap'
-import fantasy from "../data/fantasy.json"
+import { Component } from 'react'
+import { Card } from 'react-bootstrap'
+import CommentArea from './CommentArea'
 
+class SingleBook extends Component {
+  state = {
+    selected: false,
+  }
 
-const SingleBook = ({book}) => {
+  render() {
     return (
-        <div>
-             <Card style={{ width: '18rem' }}>
-      <Card.Img variant="top" src={book.coverImage} alt={`Cover of ${book.title}`} />
-      <Card.Body>
-        <Card.Title>{book.title}</Card.Title>
-      </Card.Body>
-    </Card>
-        </div>
+      <>
+        <Card
+          onClick={() => this.setState({ selected: !this.state.selected })}
+          style={{ border: this.state.selected ? '3px solid red' : 'none' }}
+        >
+          <Card.Img variant="top" src={this.props.book.img} />
+          <Card.Body>
+            <Card.Title style={{ color: 'black' }}>
+              {this.props.book.title}
+            </Card.Title>
+          </Card.Body>
+        </Card>
+        {this.state.selected && <CommentArea asin={this.props.book.asin} />}
+      </>
     )
+  }
 }
+
 export default SingleBook
